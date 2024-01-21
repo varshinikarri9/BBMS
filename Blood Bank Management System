@@ -1,0 +1,93 @@
+BLOOD BANK MANAGMENT SYSTEM
+SQL CODE
+
+CREATE TABLE BB_Manager ( M_id int NOT NULL PRIMARY KEY,  mName varchar(100) NOT NULL,  m_phNo bigint ); 
+INSERT into BB_Manager 
+VALUES(101,'shivank', 9693959671), (102,'shwetanshu', 9693959672), (103,'singh', 9693959673), (104,'yusuf', 9693959674), (105,'jackson', 9693959675),(106,'akhil', 9693959676), (107,'jojo', 9693959677), (108,'stella', 9693959678), (109,'monika', 9693959679), (110,'himanshi', 9693959680);  
+select * from BB_Manager;
+
+CREATE TABLE Blood_Donor ( bd_ID int NOT NULL PRIMARY KEY,  bd_name varchar(100) NOT NULL,  bd_age varchar(100),  bd_sex varchar(100),  bd_Bgroup varchar(10),  bd_reg_date date,  reco_ID int NOT NULL,  City_ID int NOT NULL,  FOREIGN KEY(City_ID) REFERENCES City(City_ID) ); 
+INSERT into Blood_Donor 
+VALUES(150011,'Mark',25,'M','O+','2015-07-19',101412,1100), (150012,'Abdul',35,'M','A-','2015-12-24',101412,1100), (150013,'Shivank',22,'M','AB+','2015-08-28',101212,1200), (150014,'shweta',29,'M','B+','2015-12-17',101212,1300), (150015,'Shyam',42,'M','A+','2016-11-22',101212,1300),
+(150016,'Dan',44,'F','AB-','2016-02-06',101212,1200), (150017,'Mike',33,'M','B-','2016-10-15',101312,1400), (150018,'Elisa',31,'F','O+','2016-01-04',101312,1200), (150019,'Carrol',24,'F','AB+','2016-09-10',101312,1500), (150020,'shivansh',29,'M','O-','2016-12-17',101212,1200);  
+select * from Blood_Donor;
+
+CREATE TABLE Blood_Donor ( bd_ID int NOT NULL PRIMARY KEY,  bd_name varchar(100) NOT NULL,  bd_age varchar(100),  bd_sex varchar(100),  bd_Bgroup varchar(10),  bd_reg_date date,  reco_ID int NOT NULL,  City_ID int NOT NULL,  FOREIGN KEY(City_ID) REFERENCES City(City_ID) ); 
+INSERT into Blood_Donor 
+VALUES(150011,'Mark',25,'M','O+','2015-07-19',101412,1100), (150012,'Abdul',35,'M','A-','2015-12-24',101412,1100), (150013,'Shivank',22,'M','AB+','2015-08-28',101212,1200), (150014,'shweta',29,'M','B+','2015-12-17',101212,1300), (150015,'Shyam',42,'M','A+','2016-11-22',101212,1300),
+(150016,'Dan',44,'F','AB-','2016-02-06',101212,1200), (150017,'Mike',33,'M','B-','2016-10-15',101312,1400), (150018,'Elisa',31,'F','O+','2016-01-04',101312,1200), (150019,'Carrol',24,'F','AB+','2016-09-10',101312,1500), (150020,'shivansh',29,'M','O-','2016-12-17',101212,1200);  
+select * from Blood_Donor;
+select * from City; 
+
+CREATE TABLE Hospital_Info_1( hosp_ID int NOT NULL,  hosp_name varchar(100) NOT NULL,  City_ID int NOT NULL,  M_id int NOT NULL,  primary key(hosp_ID),  FOREIGN KEY(M_id) REFERENCES Manager(M_id),  FOREIGN KEY(City_ID) REFERENCES City(City_ID) ); 
+INSERT into Hospital_Info_1 
+VALUES(1,'MayoClinic',1100,101), (2,'CleavelandClinic',1200,103), (3,'NYU',1300,103), (4,'Baylor',1400,104), (5,'Charlton',1800,103), (6,'Greenoaks',1300,106), (7,'Forestpark',1300,102), (8,'Parkland',1200,106), (9,'Pinecreek',1500,109), (10,'WalnutHill',1700,105); 
+select * from Hospital_Info_1;
+
+CREATE TABLE Recipient ( reci_ID int NOT NULL PRIMARY kEY,  reci_name varchar(100) NOT NULL,  reci_age varchar(10),  reci_Brgp varchar(100),  reci_Bqnty float,  reco_ID int NOT NULL,  City_ID int NOT NULL,  M_id int NOT NULL,  FOREIGN KEY(M_id) REFERENCES Manager(M_id),  FOREIGN KEY(City_ID) REFERENCES City(City_ID) ); 
+Alter table Recipient
+ADD reci_sex varchar(100);   
+Alter table Recipient 
+ADD reci_reg_date date; 
+INSERT into Recipient VALUES(10001,'Peter',25,'B+',1.5,101212,1100,101,'M','2015-12-17'), (10002,'shivank',60,'A+',1,101312,1100,102,'M','2015-12-16'), (10003,'akhil',35,'AB+',0.5,101312,1200,102,'M','2015-10-17'), (10004,'Parker',66,'B+',1,101212,1300,104,'M','2016-11-17'), (10005,'jojo',53,'B-',1,101412,1400,105,'M','2015-04-17'), (10006,'Preetham',45,'O+',1.5,101512,1500,105,'M','2015-12-17'), (10007,'Swetha',22,'AB-',1,101212,1500,101,'F','2015-05-17'), (10008,'Swathi',25,'B+',2,101412,1300,103,'F','2015-12-14'), (10009,'Lance',30,'A+',1.5,101312,1100,104,'M','2015-02-16'),(10010,'Marsh',25,'AB+',3.5,101212,1200,107,'M','2016-10-17'); 
+select * from Recipient;
+
+QUERIES:
+
+1.Query to retrieve all information about Blood Donors in a specific city (e.g., Dallas):
+SELECT * FROM Blood_Donor WHERE City_ID = 1100;
+
+OUTPUT:
+| bd_ID  | bd_name | bd_age | bd_sex | bd_Bgroup | bd_reg_date | reco_ID | City_ID |
+|--------|---------|--------|--------|-----------|-------------|---------|---------|
+| 15011 | Mark    | 25     | M      | O+        | 2015-07-19  | 101412  | 1100    |
+
+2. Query to display the details of Recipients who have a blood quantity greater than 1 unit:
+   SELECT * FROM Recipient WHERE reci_Bqnty > 1;
+
+OUTPUT:
+| reci_ID | reci_name | reci_age | reci_Brgp | reci_Bqnty | reco_ID | City_ID | M_id | reci_sex | reci_reg_date |
+|---------|-----------|----------|-----------|------------|---------|---------|------|----------|---------------|
+| 10001   | Peter     | 25       | B+        | 1.5        | 101212  | 1100    | 101  | M        | 2015-12-17    |
+| 10006   | Preetham  | 45       | O+        | 1.5        | 101512  | 1500    | 105  | M        | 2015-12-17    |
+| 10008   | Swathi    | 25       | B+        | 2          | 101412  | 1300    | 103  | F        | 2015-12-14    |
+
+3. Query to Show Recipients in a Specific City
+SELECT * FROM Recipient R
+JOIN City C ON R.City_ID = C.City_ID
+WHERE C.City_name = 'Austin';
+
+OUTPUT:
+reci_ID | reci_name | reci_age | reci_Brgp | reci_Bqnty | reco_ID | City_ID | M_id | reci_sex | reci_reg_date
+10002   | shivank   | 60 | A+  | 1  | 101312  | 1100 | 102  | M | 2015-12-16
+10018  | Swathi    | 25 | B+  | 2 | 101412  | 1300  | 103  | F   | 2015-12-  14 
+
+4. Query to Count Blood Donors Grouped by Blood Group
+SELECT bd_Bgroup, COUNT(*) AS Count_of_Donors 
+FROM Blood_Donor 
+GROUP BY bd_Bgroup;
+
+OUTPUT:
+bd_Bgroup | Count_of_Donors
+O+        | 2
+A-         | 1
+AB+     | 2
+B+        | 2
+A+        | 1
+AB-       | 1
+B-        | 1
+
+5. Query to find the average age of Blood Donors who have donated more than 2 times:
+SELECT AVG(bd_age) AS average_age
+FROM Blood_Donor
+WHERE bd_ID IN (
+    SELECT bd_ID
+    FROM Blood_Donor
+    GROUP BY bd_ID
+    HAVING COUNT(bd_ID) > 2
+);
+
+OUTPUT:
+| average_age |
+|-------------|
+| 34.5        |
